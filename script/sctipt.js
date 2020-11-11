@@ -1,39 +1,31 @@
 "use strict";
+const numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
 
-if (4 === 4) {
-    console.log('Ok!');
-} else {
-    console.log('Error');
+const personalMovieDB = {
+    count: numberOfFilms,
+    movies: {},
+    actors: {},
+    genres: [],
+    privat: false
+};
+
+for (let i = 0; i < 2; i++) {
+    const a = prompt('Один из последних просмотренных фильмов?', ''),
+        b = prompt('На сколько оцените его?', '');
+    if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+        personalMovieDB.movies[a] = b;
+        console.log('done');
+    } else {
+        console.log('error');
+        i--;
+    }
 }
-
-const num = 50;
-
-if (num < 49) {
-    console.log('Error');
-} else if (num > 100) {
-    console.log('Too much');
+if (personalMovieDB.count < 10) {
+    alert("Слишком мало фильмов");
+} else if (personalMovieDB.count > 10 && personalMovieDB.count < 30) {
+    alert("Вы киноман");
+} else if (personalMovieDB.count >= 30) {
+    alert(personalMovieDB);
 } else {
-    console.log('Ok!');
-}
-
-//Террнарный оператор
-const num = 50;
-(num == 50) ? console.log('Ok!'): console.log('Error');
-//условие    действие если правда   действие если неправда
-// используется 3 аргумента
-
-const num = 40;
-switch (num) {
-    case 49:
-        console.log('Falsch')
-        break;
-    case 39:
-        console.log('Falsch')
-        break;
-    case 50:
-        console.log('Falsch')
-        break;
-    case 40:
-        console.log('Richtig')
-        break;
+    alert('Что-то пошло не так');
 }
