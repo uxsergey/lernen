@@ -19,4 +19,4 @@ const d = prompt('Сколько фильмов вы уже посмотрели
 personalMovieDB.movies[a] = b;
 personalMovieDB.movies[c] = d;
 
-document.write(personalMovieDB)
+console.log(personalMovieDB)
