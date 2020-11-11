@@ -1,43 +1,28 @@
 "use strict";
-// console.log(calc(4, 5))
-// console.log(calc(5, 6))
-// console.log(calc(8, 4))
-// console.log(calc(14, 5))
 
-// function calc(a, b) {
-//     return (a + b);
-// }
+const str = "teSt";
+const arr = [1, 2, 4];
 
-let num = 20;
+// console.log(str[2] = 'd');
+console.log(str.toUpperCase());
+console.log(str.toLowerCase());
+console.log(str);
 
-function showFirstMessage(text) { //Function declarations
-    console.log(text);
-    let num = 10;
-    console.log(num); // Замыкание ф-ци
-}
-showFirstMessage('Hello World!');
-console.log(num);
+const fruit = 'some fruit'; // поиск подстроки
+console.log(fruit.indexOf("q"))
 
+const logg = "Hello World";
+console.log(logg.slice(-3, -4));
 
+//       начало строки ^   ^ конец строки
+//                           не включая последнюю
 
-function ret() {
-    let num = 50;
-    return num;
-}
+console.log(logg.substring(6, 11));
+console.log(logg.substr(3, 15));
 
-const anotherNum = ret();
-console.log(anotherNum);
+const num = 12.2;
+console.log(Math.round(num))
 
-const logger = function() { //Function Expression
-    console.log('Hello');
-};
-
-logger();
-
-// const calc = (a,b) => a+b;
-// console.log(calc(3,4))
-const calc = (a, b) => {
-    console.log('1');
-    return (a + b);
-};
-console.log(calc(3, 4));
+const test = "12.2px";
+console.log(parseInt(test)); //первод строки в целые числа
+console.log(parseFloat(test)); //первод строки в числа в десятичном значении
