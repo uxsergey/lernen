@@ -1,33 +1,32 @@
 "use strict";
+// let x = 5; alert( x++ );
 
-// To String
+// [] + false - null + true
+// console.log(typeof([] + false));
+// console.log([] + false - null + true); // NaN
 
-// 1)
+// let y = 1;
+// let x = y = 2;
+// alert(x);
 
-console.log(typeof(String(null)));
-console.log(typeof(Number(4)));
+// console.log([] + 1 + 2) // "12" String
+// console.log('1' [0]);
 
-// 2) Concatination
+// console.log(2 && 1 && null && 0 && undefined); //null
+// && (и) запианается на лжи, 
+// || (или) запинается на правде
 
-console.log(typeof(+'5'));
+// console.log(!!(a && b) === (a && b)) /// !! Возвращают Boolean 
+//  3
+// alert(null || 2 && 3 || 4); // && имеет выше логический приоритет и будет выполняться раньше ||. 
 
-// 3) 
+// const a = [1, 2, 3];
+// const b = [1, 2, 4];
 
-console.log(typeof(parseInt('15px', 10)));
+// console.log(a == b);
 
-let answer = +prompt('Hello', "");
+// alert(+'infinity');
 
-// To boolean
+// console.log('dog' > 'hotdog');
 
-// 0, '', null, undefinedm, NaN false
-
-let switcher = 0;
-
-if (switcher) {
-    console.log('Working');
-}
-// 2)
-console.log(typeof(Boolean('4')));
-
-// 3)
-console.log(typeof(!!"44444"));
+console.log(0 || "" || 2 || undefined || true || falsе); //2
