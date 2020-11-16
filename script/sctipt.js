@@ -1,32 +1,20 @@
 "use strict";
-// let x = 5; alert( x++ );
 
-// [] + false - null + true
-// console.log(typeof([] + false));
-// console.log([] + false - null + true); // NaN
+const box = document.getElementById('box');
+console.log(box);
 
-// let y = 1;
-// let x = y = 2;
-// alert(x);
+const btns = document.getElementsByTagName('button');
+console.log(btns[0]);
 
-// console.log([] + 1 + 2) // "12" String
-// console.log('1' [0]);
+const circles = document.getElementsByClassName('circle');
+console.log(circles);
 
-// console.log(2 && 1 && null && 0 && undefined); //null
-// && (и) запианается на лжи, 
-// || (или) запинается на правде
+const hearts = document.querySelectorAll('.heart'); // есть for each
+console.log(hearts);
 
-// console.log(!!(a && b) === (a && b)) /// !! Возвращают Boolean 
-//  3
-// alert(null || 2 && 3 || 4); // && имеет выше логический приоритет и будет выполняться раньше ||. 
+hearts.forEach(items => {
+    console.log(items);
+});
 
-// const a = [1, 2, 3];
-// const b = [1, 2, 4];
-
-// console.log(a == b);
-
-// alert(+'infinity');
-
-// console.log('dog' > 'hotdog');
-
-console.log(0 || "" || 2 || undefined || true || falsе); //2
+const oneHeart = document.querySelector('.heart');
+console.log(oneHeart);
