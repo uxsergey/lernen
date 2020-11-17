@@ -1,0 +1,18 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+[user]
+	name = Sergey
+	email = example@gmail.com
+[remote "origin"]
+	url = https://github.com/uxsergey/lernen.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+[branch "js-lern-project1"]
+	remote = origin
+	merge = refs/heads/js-lern-project1
