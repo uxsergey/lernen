@@ -1,50 +1,31 @@
 "use strict";
 
-const box = document.getElementById('box'),
-    btns = document.getElementsByTagName('button'),
-    wrapper = document.querySelector('.wrapper'),
-    circles = document.getElementsByClassName('circle'),
-    hearts = wrapper.querySelectorAll('.heart'), // есть for each
-    oneHeart = wrapper.querySelector('.heart'),
-    div = document.createElement('div');
+const btn = document.querySelector('button'),
+    btns = document.querySelectorAll('button'),
+    overlay = document.querySelector('.overlay');
 
-hearts.forEach(items => {
-    console.log(items);
+// btn.onclick = function() { ///Неправильно
+//     alert('click')
+// };
+// let i = 0;
+const delElement = (e) => {
+    console.log(e.currentTarget);
+    console.log(e.type);
+    // i++;
+    // if (i == 1) {
+    //     btn.removeEventListener('click', delElement);
+    // }
+};
+btns.forEach(btn => {
+    btn.addEventListener('click', delElement, {
+        once: true
+    });
 });
+// btn.addEventListener('click', delElement);
+// overlay.addEventListener('click', delElement);
 
-box.style.backgroundColor = 'blue';
-box.style.width = '500px';
-
-btns[1].style.borderRadius = '10%';
-circles[0].style.backgroundColor = 'green';
-
-box.style.cssText = 'background-color:black; width:300px';
-
-// for (let i = 0; i < hearts.length; i++) {
-//     hearts[i].style.backgroundColor = 'blue'
-// }
-
-hearts.forEach(item => {
-    item.style.backgroundColor = 'black';
+const link = document.querySelector('a');
+link.addEventListener('click', function(event) {
+    event.preventDefault();
+    console.log();
 });
-
-// const text = document.createTextNode('I was here')
-
-div.classList.add('black');
-
-wrapper.append(div);
-// wrapper.appendChild(div);//Устаревший синтаксис 
-
-//wrapper.prepend(div);
-// hearts[0].before(div);
-hearts[0].after(div);
-// wrapper.insertBefore(div, hearts[1]); //Устаревший синтаксис 
-
-//circles[0].remove();
-// wrapper.removeChild(hearts[1]); //Устаревший синтаксис 
-
-// hearts[0].replaceWith(circles[1]);
-// wrapper.replaceChild(circles, hearts[1]);
-div.innerHTML = '<h1>Hello World</h1>';
-// div.textContent = 'Hello';
-div.insertAdjacentHTML('afterend', '<h1>Hello World</h1>');
