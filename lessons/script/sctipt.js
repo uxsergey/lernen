@@ -1,31 +1,15 @@
 "use strict";
-
-const btn = document.querySelector('button'),
-    btns = document.querySelectorAll('button'),
-    overlay = document.querySelector('.overlay');
-
-// btn.onclick = function() { ///Неправильно
-//     alert('click')
-// };
-// let i = 0;
-const delElement = (e) => {
-    console.log(e.currentTarget);
-    console.log(e.type);
-    // i++;
-    // if (i == 1) {
-    //     btn.removeEventListener('click', delElement);
-    // }
-};
-btns.forEach(btn => {
-    btn.addEventListener('click', delElement, {
-        once: true
-    });
-});
-// btn.addEventListener('click', delElement);
-// overlay.addEventListener('click', delElement);
-
-const link = document.querySelector('a');
-link.addEventListener('click', function(event) {
-    event.preventDefault();
-    console.log();
-});
+// console.log(document.body);
+// console.log(document.documentElement); // Содержимое DOM дерева
+// console.log(document.body.childNodes); // Показать все узлы которые находятся внутри родителя (body)
+// console.log(document.body.firstChild); // Показать первый узел внутри родителя
+// console.log(document.body.lastChild); // Показать последний узел внутри родителя
+// console.log(document.querySelector('#current').parentNode);
+// console.log(document.querySelector('#current').parentElement);
+// console.log(document.querySelector('[data-current="3"]').nextElementSibling);
+for (let node of document.body.childNodes) {
+    if (node.nodeName == '#text') {
+        continue;
+    }
+    console.log(node);
+}
