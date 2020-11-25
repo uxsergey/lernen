@@ -10,21 +10,17 @@ button {
     width: 120px;
 }
 
-.blue {
-    background-color: blue;
+.wrapper {
+    margin-top: 2%;
+    width: 400px;
+    height: 400px;
+    border: 1px solid red;
+    position: relative;
 }
 
-.red {
-    background-color: tomato;
-    color: black;
-    transition: .5s ease-in-out;
-}
-
-.green {
-    background-color: greenyellow;
-}
-
-.btn-block {
-    padding: 10px;
-    background: rgb(223, 223, 233);
+.box {
+    position: absolute;
+    background: blue;
+    width: 100px;
+    height: 100px;
 }
