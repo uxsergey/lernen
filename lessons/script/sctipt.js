@@ -25,4 +25,4 @@ for (let i = 0; i < 10000; i++) {
 }
 let end = new Date();
 
-alert(`Цикл отработал за ${end-start} милисекунд`)
+alert(`Цикл отработал за ${end-start} милисекунд`);
