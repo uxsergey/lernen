@@ -270,7 +270,49 @@ window.addEventListener('DOMContentLoaded', () => {
 
   new MenuCard('https://media.fromthegrapevine.com/assets/images/2015/4/Sydney%20Dumpster.jpg.824x0_q71_crop-scale.jpg', "Freegan", 'Меню "Фриган"', "В качестве источника продуктов  фриганы используют свалки, мусорные контейнеры и т. п.", 9, ".menu .container").render();
   new MenuCard('img/tabs/vegy.jpg', "vegy", 'Меню "Фитнес"', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 12, ".menu .container").render();
-  new MenuCard('img/tabs/hamburger.jpg', "vegy", 'Меню "Фитнес"', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 14, ".menu .container").render();
+  new MenuCard('img/tabs/hamburger.jpg', "vegy", 'Меню "Фитнес"', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 14, ".menu .container").render(); //Form AJAX request
+
+  const forms = document.querySelectorAll('form');
+  const message = {
+    loading: 'Warte kurz',
+    success: 'Danke! Wir schreiben Ihnen bald ',
+    fail: 'Etwas schief gelaufen'
+  };
+  forms.forEach(item => {
+    postData(item);
+  });
+
+  function postData(form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const statusMessage = document.createElement('div');
+      statusMessage.classList.add('status');
+      statusMessage.textContent = message.loading;
+      form.append(statusMessage);
+      const request = new XMLHttpRequest();
+      request.open('POST', 'server.php');
+      request.setRequestHeader('Content-type', 'application/json');
+      const formData = new FormData(form);
+      const object = {};
+      formData.forEach(function (value, key) {
+        object[key] = value;
+      });
+      const json = JSON.stringify(object);
+      request.send(json);
+      request.addEventListener('load', () => {
+        if (request.status === 200) {
+          console.log(request.response);
+          statusMessage.textContent = message.success;
+          form.reset();
+          setTimeout(() => {
+            statusMessage.remove();
+          }, 2000);
+        } else {
+          statusMessage.textContent = message.fail;
+        }
+      });
+    });
+  }
 });
 
 /***/ })
