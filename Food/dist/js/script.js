@@ -180,23 +180,11 @@ window.addEventListener('DOMContentLoaded', () => {
   setClock('.timer', deadline); // Modal
 
   const modalTrigger = document.querySelectorAll('[data-modal]');
-  const modal = document.querySelector('.modal');
-  const modalCloseBtn = document.querySelector('[data-close]');
-
-  function openModal() {
-    modal.classList.add('show');
-    modal.classList.remove('hide');
-    document.body.style.overflow = 'hidden'; // clearInterval(modalTimerId);
-  }
+  const modal = document.querySelector('.modal'); // const modalCloseBtn = document.querySelector('[data-close]');
 
   modalTrigger.forEach(btn => {
     btn.addEventListener('click', openModal);
-  }); // modalTrigger.addEventListener('click', () => {
-  //     // modal.classList.add('show');
-  //     // modal.classList.remove('hide');
-  //     modal.classList.toggle('show');
-  //     document.body.style.overflow = 'hidden';
-  // });
+  });
 
   function closeModal() {
     modal.classList.add('hide');
@@ -205,9 +193,21 @@ window.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   }
 
-  modalCloseBtn.addEventListener('click', closeModal);
+  function openModal() {
+    modal.classList.add('show');
+    modal.classList.remove('hide');
+    document.body.style.overflow = 'hidden'; // clearInterval();
+  } // modalTrigger.addEventListener('click', () => {
+  //     // modal.classList.add('show');
+  //     // modal.classList.remove('hide');
+  //     modal.classList.toggle('show');
+  //     document.body.style.overflow = 'hidden';
+  // });
+  // modalCloseBtn.addEventListener('click', closeModal);
+
+
   modal.addEventListener('click', e => {
-    if (e.target === modal) {
+    if (e.target === modal || e.target.getAttribute('data-close') == '') {
       closeModal();
     }
   });
@@ -215,7 +215,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (e.code === 'Escape' && modal.classList.contains('show')) {
       closeModal();
     }
-  }); // const modalTimerId = setTimeout(openModal, 8000);
+  });
+  const modalTimerId = setTimeout(openModal, 300000);
 
   function showModalByScroll() {
     if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
@@ -274,9 +275,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const forms = document.querySelectorAll('form');
   const message = {
-    loading: 'Warte kurz',
+    loading: 'img/spinner.svg',
     success: 'Danke! Wir schreiben Ihnen bald ',
-    fail: 'Etwas schief gelaufen'
+    problem: 'Etwas schief gelaufen'
   };
   forms.forEach(item => {
     postData(item);
@@ -285,13 +286,14 @@ window.addEventListener('DOMContentLoaded', () => {
   function postData(form) {
     form.addEventListener('submit', e => {
       e.preventDefault();
-      const statusMessage = document.createElement('div');
-      statusMessage.classList.add('status');
-      statusMessage.textContent = message.loading;
-      form.append(statusMessage);
+      let statusMessage = document.createElement('img');
+      statusMessage.src = message.loading;
+      statusMessage.style.cssText = `dislpay:block; margin:0 auto;`; // form.append(statusMessage);
+
+      form.insertAdjacentElement('afterend', statusMessage);
       const request = new XMLHttpRequest();
       request.open('POST', 'server.php');
-      request.setRequestHeader('Content-type', 'application/json');
+      request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
       const formData = new FormData(form);
       const object = {};
       formData.forEach(function (value, key) {
@@ -302,16 +304,34 @@ window.addEventListener('DOMContentLoaded', () => {
       request.addEventListener('load', () => {
         if (request.status === 200) {
           console.log(request.response);
-          statusMessage.textContent = message.success;
+          statusMessage.remove();
+          showThanksModal(message.success);
           form.reset();
-          setTimeout(() => {
-            statusMessage.remove();
-          }, 2000);
         } else {
-          statusMessage.textContent = message.fail;
+          showThanksModal(message.problem);
         }
       });
     });
+  }
+
+  function showThanksModal(message) {
+    const prevModalDialog = document.querySelector('.modal__dialog');
+    prevModalDialog.classList.add('hide');
+    openModal();
+    const thanksModal = document.createElement('div');
+    thanksModal.classList.add('modal__dialog');
+    thanksModal.innerHTML = `<div class="modal__content">
+        <div class="modal__close" data-close>×</div>
+        <div class="modal__title">${message}</div>
+        </div>
+        `;
+    document.querySelector('.modal').append(thanksModal);
+    setTimeout(() => {
+      thanksModal.remove();
+      prevModalDialog.classList.add('show');
+      prevModalDialog.classList.remove('hide');
+      closeModal();
+    }, 2000);
   }
 });
 
