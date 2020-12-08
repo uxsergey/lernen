@@ -1,71 +1,51 @@
 'use strict';
-// ///Callbac hell
-// console.log('Give me data...');
 
-// setTimeout(() => {
+//foEach- пребирает массив и не возвращает новый
 
-//     console.log('Prepere date');
+// Filter
+// const names = ['ivan', 'Ann', 'Ksenia', 'Voldemart'];
 
-//     const product = {
-//         name: 'TV',
-//         price: 300
-//     };
+// const shortNames = names.filter(function (name) {
+//     return name.length < 5;
+// })
 
-//     setTimeout(() => {
-//         product.status = 'order';
-//         console.log(product);
-//     }, 2000);
-// }, 2000);
+// console.log(shortNames);
 
-// //Promes
-// console.log('Give me data...');
+//map позвляет перебрать и изменить элемент внутри него
 
-// const req = new Promise(function(resolve, reject) {
-//     setTimeout(() => {
-//         console.log('Prepere date');
+// const answ = ['ivaAn', 'ANa', 'Hello'];
+// const result = answ.map(item => item.toLocaleLowerCase());
+// console.log(result);
 
-//         const product = {
-//             name: 'TV',
-//             price: 300
-//         };
+// every/some - возвращают булиновые значения
+// const some = [4, 4, 2];
+// console.log(some.every(item => typeof(item) === 'number'));
 
-//         resolve(product);
+// reduce схлоповать или собирать массив в одно единое целое
 
-//     }, 2000);
-// });
+// const arr = [4, 5, 1, 3, 2, 6];
+// //                         0     4
+// //                         4     5
+// //                         9     1
+// //                        10     3
+// const res = arr.reduce((sum, current) => sum + current, 3);
+// console.log(res);
 
-// req.then((product) => {
-//     return new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             product.status = 'order';
-//             resolve(product);
-//             // reject();
-//         }, 2000);
-//     }).then(data => {
-//         data.modify = true;
-//         console.log(data);
-//     }).then(data => {
-//         console.log(data);
-//     });
-// }).catch(() => {
-//     console.error('It was Error');
-// }).finally(() => {
-//     console.log('Finally');
-// });
+// const arr = ['apple', 'orange', 'pear', 'plum', 'banane', 'mango', 'kiwi'];
+// //                         0     4
+// //                         4     5
+// //                         9     1
+// //                        10     3
+// const res = arr.reduce((sum, current) => `${sum}, ${current}`);
+// console.log(res);
 
-const test = time => {
-    return new Promise(resolve => {
-        setTimeout(() => resolve(), time);
-    });
+const obj = {
+    ivan: 'person',
+    ann: 'person',
+    dog: 'animal',
+    cat: 'animal'
 };
 
-// test(1000).then(() => console.log('1000ms'));
-// test(2000).then(() => console.log('2000ms'));
+const newArr = Object.entries(obj).filter(item => item[1] === 'person').map(item => item[0]);
 
-// Promise.all([test(1000), test(2000)]).then(() => { //ожидает выполнения всех промисов 
-//     console.log('ALL');
-// });
-
-Promise.race([test(1000), test(2000)]).then(() => {
-    console.log('ALL'); //ожидает выполнения первого успешно выполненого промиса
-});
+console.log(newArr);
