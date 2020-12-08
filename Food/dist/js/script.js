@@ -290,27 +290,42 @@ window.addEventListener('DOMContentLoaded', () => {
       statusMessage.src = message.loading;
       statusMessage.style.cssText = `dislpay:block; margin:0 auto;`; // form.append(statusMessage);
 
-      form.insertAdjacentElement('afterend', statusMessage);
-      const request = new XMLHttpRequest();
-      request.open('POST', 'server.php');
-      request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+      form.insertAdjacentElement('afterend', statusMessage); // const request = new XMLHttpRequest(); // XMLHttpRequest Version
+      // request.open('POST', 'server.php');
+      // request.setRequestHeader('Content-type', 'application/json; charset=utf-8'); // XMLHttpRequest Version
+
       const formData = new FormData(form);
       const object = {};
       formData.forEach(function (value, key) {
         object[key] = value;
-      });
-      const json = JSON.stringify(object);
-      request.send(json);
-      request.addEventListener('load', () => {
-        if (request.status === 200) {
-          console.log(request.response);
-          statusMessage.remove();
-          showThanksModal(message.success);
-          form.reset();
-        } else {
-          showThanksModal(message.problem);
-        }
-      });
+      }); // const json = JSON.stringify(object);
+      // request.send(json);
+
+      fetch('server.php', {
+        method: "POST",
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify(object)
+      }).then(data => data.text()).then(data => {
+        console.log(data);
+        statusMessage.remove();
+        showThanksModal(message.success);
+        form.reset();
+      }).catch(() => {
+        showThanksModal(message.problem);
+      }).finally(() => {
+        form.reset();
+      }); // request.addEventListener('load', () => {  // XMLHttpRequest Version
+      //     if (request.status === 200) {
+      //         console.log(request.response);
+      //         statusMessage.remove();
+      //         showThanksModal(message.success);
+      //         form.reset();
+      //     } else {
+      //         showThanksModal(message.problem);
+      //     }
+      // });
     });
   }
 
