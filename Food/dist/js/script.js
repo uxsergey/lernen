@@ -230,7 +230,7 @@ window.addEventListener('DOMContentLoaded', () => {
   class MenuCard {
     constructor(src, alt, title, descr, price, parentSelector, ...classes) {
       this.src = src;
-      this.alt = alt;
+      this.altimg = alt;
       this.title = title;
       this.descr = descr;
       this.price = price;
@@ -269,9 +269,46 @@ window.addEventListener('DOMContentLoaded', () => {
 
   }
 
-  new MenuCard('https://media.fromthegrapevine.com/assets/images/2015/4/Sydney%20Dumpster.jpg.824x0_q71_crop-scale.jpg', "Freegan", 'Меню "Фриган"', "В качестве источника продуктов  фриганы используют свалки, мусорные контейнеры и т. п.", 9, ".menu .container").render();
-  new MenuCard('img/tabs/vegy.jpg', "vegy", 'Меню "Фитнес"', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 12, ".menu .container").render();
-  new MenuCard('img/tabs/hamburger.jpg', "vegy", 'Меню "Фитнес"', 'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 14, ".menu .container").render(); //Form AJAX request
+  const getResource = async url => {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+    }
+
+    return await res.json();
+  };
+
+  getResource('http://localhost:3000/menu').then(data => {
+    data.forEach(({
+      img,
+      altimg,
+      title,
+      descr,
+      price
+    }) => {
+      new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+    });
+  }); // getResource('http://localhost:3000/menu') // Создание карточек без шаблонизации
+  //     .then(data => createCard(data));
+  // function createCard(data) {
+  //     data.forEach(({ img, altimg, title, descr, price }) => {
+  //         const element = document.createElement('div');
+  //         element.classList.add('menu__item');
+  //         element.innerHTML =
+  //             `<img src=${img} alt="${altimg}">
+  //     <h3 class="menu__item-subtitle">${title}</h3>
+  //     <div class="menu__item-descr">${descr}</div>
+  //     <div class="menu__item-divider"></div>
+  //     <div class="menu__item-price">
+  //         <div class="menu__item-cost">Цена:</div>
+  //         <div class="menu__item-total"><span>${price}</span> грн/день</div>
+  //     </div>
+  //    `;
+  //         document.querySelector('.menu .container').append(element);
+  //     });
+  // }
+  //Form AJAX request
 
   const forms = document.querySelectorAll('form');
   const message = {
@@ -280,52 +317,39 @@ window.addEventListener('DOMContentLoaded', () => {
     problem: 'Etwas schief gelaufen'
   };
   forms.forEach(item => {
-    postData(item);
+    bindPostData(item);
   });
 
-  function postData(form) {
+  const postData = async (url, data) => {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: data
+    });
+    return await res.json();
+  };
+
+  function bindPostData(form) {
     form.addEventListener('submit', e => {
       e.preventDefault();
       let statusMessage = document.createElement('img');
       statusMessage.src = message.loading;
-      statusMessage.style.cssText = `dislpay:block; margin:0 auto;`; // form.append(statusMessage);
-
-      form.insertAdjacentElement('afterend', statusMessage); // const request = new XMLHttpRequest(); // XMLHttpRequest Version
-      // request.open('POST', 'server.php');
-      // request.setRequestHeader('Content-type', 'application/json; charset=utf-8'); // XMLHttpRequest Version
-
+      statusMessage.style.cssText = `dislpay:block; margin:0 auto;`;
+      form.insertAdjacentElement('afterend', statusMessage);
       const formData = new FormData(form);
-      const object = {};
-      formData.forEach(function (value, key) {
-        object[key] = value;
-      }); // const json = JSON.stringify(object);
-      // request.send(json);
-
-      fetch('server.php', {
-        method: "POST",
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(object)
-      }).then(data => data.text()).then(data => {
+      const json = JSON.stringify(Object.fromEntries(formData.entries()));
+      postData('http://localhost:3000/requests', json).then(data => {
         console.log(data);
         statusMessage.remove();
         showThanksModal(message.success);
-        form.reset();
+        statusMessage.remove();
       }).catch(() => {
         showThanksModal(message.problem);
       }).finally(() => {
         form.reset();
-      }); // request.addEventListener('load', () => {  // XMLHttpRequest Version
-      //     if (request.status === 200) {
-      //         console.log(request.response);
-      //         statusMessage.remove();
-      //         showThanksModal(message.success);
-      //         form.reset();
-      //     } else {
-      //         showThanksModal(message.problem);
-      //     }
-      // });
+      });
     });
   }
 
