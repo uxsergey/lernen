@@ -196,13 +196,19 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    getResource('http://localhost:3000/menu')
+    // getResource('http://localhost:3000/menu')
+    //     .then(data => {
+    //         data.forEach(({ img, altimg, title, descr, price }) => {
+    //             new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+    //         });
+    //     });
+    const axios = require('axios');
+    axios.get('http://localhost:3000/menu')
         .then(data => {
-            data.forEach(({ img, altimg, title, descr, price }) => {
+            data.data.forEach(({ img, altimg, title, descr, price }) => {
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             });
         });
-
     // getResource('http://localhost:3000/menu') // Создание карточек без шаблонизации
     //     .then(data => createCard(data));
 
@@ -302,6 +308,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     }
 
-    fetch('http://localhost:3000/menu').then(data => data.json())
+    fetch('http://localhost:3000/menu')
+        .then(data => data.json())
         .then(res => console.log(res));
 });
