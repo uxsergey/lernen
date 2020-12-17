@@ -1,51 +1,51 @@
 'use strict';
+// localstorage
 
-//foEach- пребирает массив и не возвращает новый
 
-// Filter
-// const names = ['ivan', 'Ann', 'Ksenia', 'Voldemart'];
+// localStorage.setItem('number', 5);
 
-// const shortNames = names.filter(function (name) {
-//     return name.length < 5;
-// })
+// // localStorage.removeItem('number');
 
-// console.log(shortNames);
+// localStorage.clear();
+// console.log(localStorage.getItem('number'));
 
-//map позвляет перебрать и изменить элемент внутри него
+const checkbox = document.querySelector('#checkbox'),
+    form = document.querySelector('form'),
+    change = document.querySelector('#color');
 
-// const answ = ['ivaAn', 'ANa', 'Hello'];
-// const result = answ.map(item => item.toLocaleLowerCase());
-// console.log(result);
 
-// every/some - возвращают булиновые значения
-// const some = [4, 4, 2];
-// console.log(some.every(item => typeof(item) === 'number'));
+if (localStorage.getItem('isChecked')) {
+    checkbox.checked = true;
+}
 
-// reduce схлоповать или собирать массив в одно единое целое
+if (localStorage.getItem('bg') === 'changed') {
+    form.style.backgroundColor = 'blue';
 
-// const arr = [4, 5, 1, 3, 2, 6];
-// //                         0     4
-// //                         4     5
-// //                         9     1
-// //                        10     3
-// const res = arr.reduce((sum, current) => sum + current, 3);
-// console.log(res);
+}
+checkbox.addEventListener('change', () => {
+    localStorage.setItem('isChecked', true);
+});
 
-// const arr = ['apple', 'orange', 'pear', 'plum', 'banane', 'mango', 'kiwi'];
-// //                         0     4
-// //                         4     5
-// //                         9     1
-// //                        10     3
-// const res = arr.reduce((sum, current) => `${sum}, ${current}`);
-// console.log(res);
+change.addEventListener('click', () => {
 
-const obj = {
-    ivan: 'person',
-    ann: 'person',
-    dog: 'animal',
-    cat: 'animal'
+    if (localStorage.getItem('bg') === 'changed') {
+
+        localStorage.removeItem('bg');
+        form.style.backgroundColor = 'white';
+
+    } else {
+        localStorage.setItem('bg', 'changed');
+        form.style.backgroundColor = 'blue';
+    }
+});
+
+
+const persone = {
+    name: 'Alex',
+    age: 25
 };
 
-const newArr = Object.entries(obj).filter(item => item[1] === 'person').map(item => item[0]);
+// const serializedPersone = JSON.stringify(persone);
+localStorage.setItem('alex', persone);
 
-console.log(newArr);
+console.log(localStorage.getItem('alex'));
