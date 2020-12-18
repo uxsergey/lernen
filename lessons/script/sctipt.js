@@ -1,51 +1,34 @@
 'use strict';
-// localstorage
+//Regular epressions
 
 
-// localStorage.setItem('number', 5);
+// new RegExp('pattern', 'flags');
+// /pattern/f
 
-// // localStorage.removeItem('number');
+// const ans = prompt('Enter your age');
+const reg = /\d/ig;
 
-// localStorage.clear();
-// console.log(localStorage.getItem('number'));
+const str = 'My name is R2D2';
+console.log(str.match(/\D/ig));
+// console.log(ans.match(reg));
+// console.log(reg.test(ans));
 
-const checkbox = document.querySelector('#checkbox'),
-    form = document.querySelector('form'),
-    change = document.querySelector('#color');
+//\D поиск всех не цифр
+//\W поиск всех не букв
 
-
-if (localStorage.getItem('isChecked')) {
-    checkbox.checked = true;
-}
-
-if (localStorage.getItem('bg') === 'changed') {
-    form.style.backgroundColor = 'blue';
-
-}
-checkbox.addEventListener('change', () => {
-    localStorage.setItem('isChecked', true);
-});
-
-change.addEventListener('click', () => {
-
-    if (localStorage.getItem('bg') === 'changed') {
-
-        localStorage.removeItem('bg');
-        form.style.backgroundColor = 'white';
-
-    } else {
-        localStorage.setItem('bg', 'changed');
-        form.style.backgroundColor = 'blue';
-    }
-});
+// \d digits поиск цифр
+// \w поиск всех слов всех букв
+// \s spaces поиск всех пробелов
 
 
-const persone = {
-    name: 'Alex',
-    age: 25
-};
+// i найти независимости от регистра
+// g найти сразу несколько вхождений
+// m включает многострочный режим
 
-// const serializedPersone = JSON.stringify(persone);
-localStorage.setItem('alex', persone);
+// console.log(ans.search(reg));
+// console.log(ans.match(reg));
 
-console.log(localStorage.getItem('alex'));
+// const pass = prompt('Password');
+// console.log(pass.replace(/\./g, '*'));
+
+// console.log('12-33-56'.replace(/-/g, ':'));
